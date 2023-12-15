@@ -52,10 +52,14 @@ clear edepID;
 time(dropedTimeIndex, :) = [];
 edep(:,:,dropedEdepIndex) = [];
 
-edep = permute(edep, [2,1,3]);
-edep = reshape(edep, 4, 4 .* size(edep, 3))';
-edep = mat2cell(edep, 4 .* ones(size(edep,1) ./ 4, 1), size(edep,2));
-event = [num2cell(time), edep];
+% edep = permute(edep, [2,1,3]);
+% edep = reshape(edep, 4, 4 .* size(edep, 3))';
+% edep = mat2cell(edep, 4 .* ones(size(edep,1) ./ 4, 1), size(edep,2));
+% event = [num2cell(time), edep];
+event.ID = time(:,1);
+event.time = time(:,2);
+event.edep = edep;
+
 
 % name = listFileName(10:end);
 % name = strrep(name, '.txt', '');
