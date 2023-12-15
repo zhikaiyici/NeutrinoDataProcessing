@@ -1,4 +1,4 @@
-function event = PreprocessV2(listFileName, timeFileName, fCalib)
+function event = Preprocess(listFileName, timeFileName, fCalib)
 % 去除编号重复的无效事件，取Time和List数据的交集
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % V2更新内容

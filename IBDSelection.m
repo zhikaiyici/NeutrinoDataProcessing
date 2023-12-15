@@ -1,4 +1,4 @@
-function IBDEvent = IBDSelectionV2(event)
+function IBDEvent = IBDSelection(event)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %          |          瞬时信号         |           延迟信号
 % 甄别项目 |          甄别条件         |           甄别条件

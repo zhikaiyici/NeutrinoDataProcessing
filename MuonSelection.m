@@ -1,4 +1,4 @@
-function [muonEvent, muonFamily, timeGap]= MuonSelectionV2(event)
+function [muonEvent, muonFamily, timeGap]= MuonSelection(event)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %          |          瞬时信号         |           延迟信号
 % 甄别项目 |          甄别条件         |           甄别条件
