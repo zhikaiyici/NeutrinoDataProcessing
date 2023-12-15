@@ -1,5 +1,9 @@
-function event = Preprocess(listFileName, timeFileName, fCalib)
+function event = PreprocessV2(listFileName, timeFileName, fCalib)
 % 去除编号重复的无效事件，取Time和List数据的交集
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% V2更新内容
+% 减少cell2mat(num2cell, mat2cell)使用，提升运行速度
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % edepData = importdata('LIST0.txt');
 % edepData = importdata(listFileName);
@@ -29,24 +33,29 @@ edep = fCalib(edep);
 edep(edep < 200) = 0;
 edepID = edepData(1:5:end, 1);
 clear edepData;
-edep = mat2cell(edep, 4 .* ones(size(edep,1) ./ 4, 1), size(edep,2));
+
+edep = ReshapeDataMatrix(4,edep);
+
 [~, uniqueEdepIndex] = unique(edepID,'stable');
 duplicateEdepIndex = setdiff((1:size(edepID, 1))',uniqueEdepIndex);
 clear uniqueEdepIndex;
-edep = [num2cell(edepID), edep];
-clear edepID;
-edep(duplicateEdepIndex,:) = [];
 
-eventID = intersect(time(:,1), cell2mat(edep(:,1)), 'stable');
+edepID(duplicateEdepIndex,:) = [];
+edep(:,:,duplicateEdepIndex) = [];
+
+eventID = intersect(time(:,1), edepID, 'stable');
 [~, dropedTimeIndex] = setdiff(time(:,1), eventID);
-[~, dropedEdepIndex] = setdiff(cell2mat(edep(:,1)), eventID);
+[~, dropedEdepIndex] = setdiff(edepID, eventID);
 clear eventID;
+clear edepID;
 
 time(dropedTimeIndex, :) = [];
-edep(dropedEdepIndex, :) = [];
+edep(:,:,dropedEdepIndex) = [];
 
-event = [num2cell(time), edep(:,2)];
-% clearvars -except event;
+edep = permute(edep, [2,1,3]);
+edep = reshape(edep, 4, 4 .* size(edep, 3))';
+edep = mat2cell(edep, 4 .* ones(size(edep,1) ./ 4, 1), size(edep,2));
+event = [num2cell(time), edep];
 
 % name = listFileName(10:end);
 % name = strrep(name, '.txt', '');
