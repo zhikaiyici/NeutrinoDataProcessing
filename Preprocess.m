@@ -1,6 +1,9 @@
 function event = Preprocess(listFileName, timeFileName, fCalib)
 % 去除编号重复的无效事件，取Time和List数据的交集
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% V3更新内容
+% 使用结构储存数据，提升性能
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % V2更新内容
 % 减少cell2mat(num2cell, mat2cell)使用，提升运行速度
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,8 +31,8 @@ time(duplicateTimeIndex,:) = [];
 
 edep = edepData;
 edep(1:5:end,:) = [];
-edep = sqrt(edep(:,1:2:end) .* edep(:,2:2:end));
 edep = fCalib(edep);
+edep = sqrt(edep(:,1:2:end) .* edep(:,2:2:end));
 edep(edep < 200) = 0;
 edepID = edepData(1:5:end, 1);
 clear edepData;
