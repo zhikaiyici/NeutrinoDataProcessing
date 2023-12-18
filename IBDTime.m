@@ -4,12 +4,14 @@ load('IBDEvent_P25D28.mat');
 % IBDEvent = IBDEvent(:,2);
 timeGap = [];
 for ii = 1:size(IBDEvent, 1)
-    time = IBDEvent{ii,2}(:,2);
-    time = cell2mat(time);
+    % time = IBDEvent{ii,2}(:,2);
+    % time = cell2mat(time);
+    time = IBDEvent{ii,2}.time;
     gap = time(2:end) - time(1:end-1);
     gap(gap > 300) = [];
     timeGap = [timeGap; gap];
 end
+load("MuonNeutronTimeGap_10MeV.mat");
 %%
 figure
 tEdges = 0:8:300;

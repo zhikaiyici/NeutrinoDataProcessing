@@ -5,18 +5,24 @@ arraySize = 4;
 edepPrompt = [];
 edepDelayed = [];
 for ii = 1:size(IBDEvent, 1)
-    edep = IBDEvent{ii,2}(:,3);
-    prompt = edep(1:2:end);
-    prompt = cell2mat(prompt);
-    edepPrompt = [edepPrompt; prompt];
+    % edep = IBDEvent{ii,2}(:,3);
+    edep = IBDEvent{ii,2}.edep;
 
-    delayed = edep(2:2:end);
-    delayed = cell2mat(delayed);
-    edepDelayed = [edepDelayed; delayed];
+    % prompt = edep(1:2:end);
+    % prompt = cell2mat(prompt);
+    % edepPrompt = [edepPrompt; prompt];
+    prompt = edep(:,:,1:2:end);
+    edepPrompt = cat(3, edepPrompt, prompt);
+
+    % delayed = edep(2:2:end);
+    % delayed = cell2mat(delayed);
+    % edepDelayed = [edepDelayed; delayed];
+    delayed = edep(:,:,2:2:end);
+    edepDelayed = cat(3, edepDelayed, delayed);
 end
 
-edepPrompt = ReshapeDataMatrix(arraySize, edepPrompt);
-edepDelayed = ReshapeDataMatrix(arraySize, edepDelayed);
+% edepPrompt = ReshapeDataMatrix(arraySize, edepPrompt);
+% edepDelayed = ReshapeDataMatrix(arraySize, edepDelayed);
 
 promptTotal = sum(sum(edepPrompt));
 delayedTotal = sum(sum(edepDelayed));

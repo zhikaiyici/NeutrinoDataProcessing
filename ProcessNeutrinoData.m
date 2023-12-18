@@ -17,8 +17,8 @@ fCalibD = @(ADC) ADC .* 1.734 - 194.3; % 刻度探测器 E(keV) = 1.734 * ADC - 
 % fCalibS = @(ADC) ADC .* 1.702 - 281.6; % 刻度模拟信号发生器 E(keV) = 1.702 * ADC - 281.6 % 1900
 fCalibS = @(ADC) ADC .* 2.015 - 323.3; % 刻度模拟信号发生器 E(keV) = 2.015 * ADC - 323.3 % 1600
 
-% for ii = 1:fileNum
-parfor ii = 1:fileNum
+for ii = 1:fileNum
+% parfor ii = 1:fileNum
     listFileName = [dirName, '\', listName(ii,:)];
     timeFileName = [dirName, '\', timeName(ii,:)];
     name = listFileName(10:end);
@@ -27,21 +27,24 @@ parfor ii = 1:fileNum
         name = strrep(name, ' ', '');
     end
     event = Preprocess(listFileName, timeFileName, fCalibD);
-    [muonE, muonF, timeG] = MuonSelection(event);
-    timeGap = [timeGap; timeG];
-    muonEvent = [muonEvent; muonE];
-    muonFamily{ii, 1} = muonF;
+    ParSave(['event\event', name], event, '-v7.3');
+    % [muonE, muonF, timeG] = MuonSelection(event);
+    % ParSave(['muon\muon', name], muonE, '-v7.3');
+    % timeGap = [timeGap; timeG];
+    % muonEvent = [muonEvent; muonE];
+    % muonFamily{ii, 1} = muonF;
     % temp = IBDSelection(event);
     % IBDEvent(ii,:) = {name, temp, size(temp, 1)};
     % IBDEvent(ii,:) = {name, temp, size(temp, 1), size(event,1), 100 .* size(temp, 1) ./2 ./ 9000};% 最后一列为甄别效率（模拟）
 end
 
 % save('IBDEvent_P25D28.mat', 'IBDEvent');
-save('MuonEvent.mat', 'muonEvent');
+% save('MuonEvent_10MeV-v7.mat', 'muonEvent', '-v7');
 % save('MuonGenerated.mat', 'muonGenerated');
-% save('muonFamily.mat', 'muonFamily');
+% save('MuonFamily.mat', 'muonFamily');
 %%
 % t = cell2mat(muonGenerated(:,2));
 % tGap = t(2:end)-t(1:end-1);
 
+% muonEvent1 = muonEvent(1:length(muonEvent) / 10,:);
 
