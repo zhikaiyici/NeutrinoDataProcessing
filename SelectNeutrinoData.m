@@ -4,8 +4,8 @@ cd(dirName);
 name = ls;
 cd ..
 name = name(3:end,:);
-
 fileNum = size(name, 1);
+
 IBDEvent = cell(fileNum, 5);
 timeGap = [];
 muonEvent = [];
