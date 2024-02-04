@@ -26,8 +26,9 @@ for ii = 1:fileNum
     while contains(name, ' ')
         name = strrep(name, ' ', '');
     end
+    name = name(end-11:end);
     event = Preprocess(listFileName, timeFileName, fCalibD);
-    ParSave(['event\event', name], event, '-v7.3');
+    ParSave(['event_corrected\event_', name], event, '-v7.3');
     % [muonE, muonF, timeG] = MuonSelection(event);
     % ParSave(['muon\muon', name], muonE, '-v7.3');
     % timeGap = [timeGap; timeG];
