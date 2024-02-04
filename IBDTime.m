@@ -1,6 +1,6 @@
 clear
 
-load('IBDEvent_P25D28.mat');
+load('IBDEvent_P25D28_corrected.mat');
 % IBDEvent = IBDEvent(:,2);
 timeGap = [];
 for ii = 1:size(IBDEvent, 1)
@@ -11,7 +11,8 @@ for ii = 1:size(IBDEvent, 1)
     gap(gap > 300) = [];
     timeGap = [timeGap; gap];
 end
-load("MuonNeutronTimeGap_10MeV.mat");
+%%
+% load("MuonNeutronTimeGap_corrected.mat");
 %%
 figure
 tEdges = 0:8:300;
