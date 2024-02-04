@@ -32,12 +32,20 @@ time(duplicateTimeIndex,:) = [];
 edep = edepData;
 edep(1:5:end,:) = [];
 edep = fCalib(edep);
-edep = sqrt(edep(:,1:2:end) .* edep(:,2:2:end));
+edep(edep < 0) = 0;
+edepL = edep(:,1:2:end);
+edepR = edep(:,2:2:end);
+lostR = edepL > 0 & edepR == 0;
+lostL = edepL == 0 & edepR > 0;
+edepR(lostR) = edepL(lostR);
+edepL(lostL) = edepR(lostL);
+edep = sqrt(edepL .* edepR); % geometric mean
+% edep = (edepL + edepR) ./ 2; % arithmetic mean
 edep(edep < 200) = 0;
 edepID = edepData(1:5:end, 1);
 clear edepData;
 
-edep = ReshapeDataMatrix(4,edep);
+edep = ReshapeDataMatrix(4, edep);
 
 [~, uniqueEdepIndex] = unique(edepID,'stable');
 duplicateEdepIndex = setdiff((1:size(edepID, 1))',uniqueEdepIndex);
@@ -62,6 +70,8 @@ edep(:,:,dropedEdepIndex) = [];
 event.ID = time(:,1);
 event.time = time(:,2);
 event.edep = edep;
+event.lostRateR = sum(lostR,'all') ./ numel(edepR);
+event.lostRateL = sum(lostL,'all') ./ numel(edepL);
 
 
 % name = listFileName(10:end);
