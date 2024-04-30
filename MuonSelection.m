@@ -1,16 +1,15 @@
 function [muonEvent, muonFamily, timeGap]= MuonSelection(event)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%          |          瞬时信号         |           延迟信号
-% 甄别项目 |          甄别条件         |           甄别条件
-% 预甄别   |      Eth > 200 keV        |        Eth > 200 keV
-% Ntrigger |     2 ≤ Ntrigger ≤ 16     |    2 ≤ Ntrigger ≤ 16
-% Etotal   | 2.5 MeV < Etotal ≤ 7 MeV  | 2.8 MeV < Etotal ≤ 8 MeV
-% E1st     |  1 MeV < E1st ≤ 6.5 MeV   |  0.5 MeV < E1st ≤ 7 MeV
-% E2nd     |       E2nd < 520 keV      |       E2nd ≤ 3 MeV
-% E3rd     |             --            |       E3rd ≤ 2 MeV
-% E4th     |             --            |       E4th ≤ 1 MeV
-% -------------------------------------------------------------------------
-% ΔT       |                    8 μs < ΔT < 300 μs
+%              Prompt              |           Delayed
+%          Eth > 200 keV           |        Eth > 200 keV
+%         2 ≤ Ntrigger ≤ 16        |    2 ≤ Ntrigger ≤ 16
+%     2.5 MeV < Etotal ≤ 7 MeV     | 2.8 MeV < Etotal ≤ 8 MeV
+%      1 MeV < E1st ≤ 6 MeV        |  0.5 MeV < E1st ≤ 6 MeV
+%         E2nd < 520 keV           |       E2nd ≤ 3 MeV
+% Etotal – (E1st + E2nd) < 700 keV |       E3rd ≤ 2 MeV
+%                 --               |       E4th ≤ 1 MeV
+% ---------------------------------------------------------------
+%                          8 μs < ΔT < 300 μs
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % V2更新内容
 % 1、添加了μ子事件后续事件的甄别（依据延迟信号，即中子俘获信号的甄别条件）。
@@ -74,10 +73,10 @@ while true
     edep = reshape(edep',[16, numel(edep) ./ 16])';
     edepSorted = sort(edep, 2, 'descend');
     totalEdep = sum(edepSorted, 2);
-    dropedEvent = (totalEdep > 8000 | totalEdep < 2800 | edepSorted(:,1) > 7000 ...
+    dropedEvent = (totalEdep > 8000 | totalEdep < 2800 | edepSorted(:,1) > 6000 ...
         | edepSorted(:,2) > 3000 | edepSorted(:,3) > 2000 | edepSorted(:,4) > 1000);
     % 去除2.8MeV > Etotoal > 8MeV、
-    % E1st > 7MeV、E2nd > 3MeV、E3rd > 2 MeV、E4th > 1MeV的μ子后第ii个事件
+    % E1st > 6MeV、E2nd > 3MeV、E3rd > 2 MeV、E4th > 1MeV的μ子后第ii个事件
     % muonF(dropedEvent,:) = [];
     muonE.ID(dropedEvent,:) = [];
     muonE.time(dropedEvent,:) = [];
