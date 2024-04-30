@@ -1,16 +1,15 @@
 function IBDEvent = IBDSelection(event)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%          |          瞬时信号         |           延迟信号
-% 甄别项目 |          甄别条件         |           甄别条件
-% 预甄别   |      Eth > 200 keV        |        Eth > 200 keV
-% Ntrigger |     2 ≤ Ntrigger ≤ 16     |    2 ≤ Ntrigger ≤ 16
-% Etotal   | 2.5 MeV < Etotal ≤ 7 MeV  | 2.8 MeV < Etotal ≤ 8 MeV
-% E1st     |  1 MeV < E1st ≤ 6.5 MeV   |  0.5 MeV < E1st ≤ 7 MeV
-% E2nd     |       E2nd < 520 keV      |       E2nd ≤ 3 MeV
-% E3rd     |             --            |       E3rd ≤ 2 MeV
-% E4th     |             --            |       E4th ≤ 1 MeV
-% -------------------------------------------------------------------------
-% ΔT       |                    8 μs < ΔT < 300 μs
+%              Prompt              |           Delayed
+%          Eth > 200 keV           |        Eth > 200 keV
+%         2 ≤ Ntrigger ≤ 16        |    2 ≤ Ntrigger ≤ 16
+%     2.5 MeV < Etotal ≤ 7 MeV     | 2.8 MeV < Etotal ≤ 8 MeV
+%      1 MeV < E1st ≤ 6 MeV        |  0.5 MeV < E1st ≤ 6 MeV
+%         E2nd < 520 keV           |       E2nd ≤ 3 MeV
+% Etotal – (E1st + E2nd) < 700 keV |       E3rd ≤ 2 MeV
+%                 --               |       E4th ≤ 1 MeV
+% ---------------------------------------------------------------
+%                          8 μs < ΔT < 300 μs
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 甄别顺序：
 % 1、200keV预甄别
