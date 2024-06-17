@@ -5,8 +5,9 @@ cd(dirName);
 name = ls;
 cd ..
 name = name(3:end,:);
+
 fileNum = size(name, 1);
-num = zeros(fileNum, 1);
+stNum = zeros(fileNum, 1);
 for ii = 1:fileNum
     fileName = [dirName, '\', name(ii,:)];
     while contains(fileName, ' ')
@@ -14,9 +15,13 @@ for ii = 1:fileNum
     end
     temp = load(fileName);
     event = temp.event;
-    num(ii, 1) = event.num;
+    stNum(ii, 1) = event.num;
 end
+
+IBDEvent = load('IBDEvent_P25D28_1st6_rest700.mat');
+IBDEvent = IBDEvent.IBDEvent;
+num = [stNum, cell2mat(IBDEvent(:,4))];
 %%
-stRate = num ./ 3600;
-meanSTRate = mean(stRate);
-stdSTRate = std(stRate);
+rate = num ./ 3600;
+meanRate = mean(rate);
+stdRate = std(rate);
