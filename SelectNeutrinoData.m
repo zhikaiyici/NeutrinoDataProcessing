@@ -28,8 +28,12 @@ parfor ii = 1:fileNum
     IBDNum = size(temp.ID, 1);
     eventNum = size(event.ID, 1);
     IBDEvent(ii,:) ={fileName(end-15:end-4), temp, IBDNum, eventNum, IBDNum ./ eventNum};
+    % 'soft triggered' means selecting events only in terms of energy
+    % temp.eventNum = eventNum;
+    % temp.num = IBDNum;
+    % ParSave(['event_soft_triggered\event_st_', fileName(end-15:end-4)], temp, '-v7.3');
 end
-save("IBDEvent_P25D28_muonic.mat", "IBDEvent", '-v7');
+save("IBDEvent_P25D28_1st6_rest700.mat", "IBDEvent", '-v7');
 % save("MuonFamily_1st6.mat", "muonFamily", '-v7');
 % save("MuonNeutronTimeGap_1st6.mat", "timeGap", '-v7');
 
