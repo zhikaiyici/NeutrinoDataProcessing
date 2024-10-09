@@ -1,6 +1,6 @@
 clear
 
-IBDMuonic = load('IBDEvent_P25D28_muonic.mat');
+IBDMuonic = load('IBDEvent_P25D28_withmuonic.mat');
 IBD = load('IBDEvent_P25D28_1st6_rest700.mat');
 
 IBDMuonic = IBDMuonic.IBDEvent;

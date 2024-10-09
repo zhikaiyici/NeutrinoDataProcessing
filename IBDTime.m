@@ -2,7 +2,7 @@ clear
 
 load('IBDEvent_P25D28_corrected.mat');
 load('IBDEvent_P25D28_1st6.mat');
-load('IBDEvent_P25D28_muonic.mat');
+load('IBDEvent_P25D28_withmuonic.mat');
 load('IBDEvent_P25D28_1st6_rest700.mat');
 % IBDEvent = IBDEvent(:,2);
 timeGap = [];
@@ -20,12 +20,12 @@ end
 edep = reshape(permute(edep, [2, 1, 3]), [4, size(edep, 3) * 4]);
 edep = reshape(edep, [16, numel(edep) ./ 16])';
 [edepSorted, eIndex] = sort(edep, 2, 'descend');
-[r1st, c1st] = ind2sub(4, eIndex);
+[r1st, c1st] = ind2sub([4, 4], eIndex);
 edepPrompt = edepSorted(1:2:end,:);
 edepDelayed = edepSorted(2:2:end,:);
 %%
 % load("MuonNeutronTimeGap_corrected.mat");
-load("MuonNeutronTimeGap_1st6.mat");
+% load("MuonNeutronTimeGap_1st6.mat");
 
 %%
 sliceNum = 10;
